@@ -1,0 +1,7 @@
+name = "CompileModules"
+uuid = "fa0a8890-c04f-11e9-094b-67c7e58e46bc"
+authors = ["Adam Beckmeyer <adam_gpg@thebeckmeyers.xyz>"]
+version = "0.1.0"
+
+[deps]
+Logging = "56ddb016-857b-54e1-b83d-db4d58db5568"
