@@ -22,6 +22,6 @@ with a single function entry (e.g. ~main~). Then, after the end of the
 
 See ~examples/nbody.jl~ for a script that uses these features.
 
-Note that currently this package does not track whether a script has
-been modified to force recompilation of cache. If a script is
-modified, the ~.ji~ file should be manually deleted.
+Note that currently this package does not check whether a module's
+dependencies have been updated. If dependencies have been updated, the
+~.ji~ file must be recompiled.

@@ -45,11 +45,16 @@ function compilecache(input::AbstractString,
 end#function
 
 loadcache(cache::AbstractString=defaultcache(PROGRAM_FILE)) =
-    # TODO: test whether cache is stale
     Base._require_from_serialized(cache)
 
-ensure_compilecache(input::AbstractString,
-                    output::AbstractString=defaultcache(input)) =
-    !isfile(output) && compilecache(input, output)
+function ensure_compilecache(input::AbstractString,
+                             output::AbstractString=defaultcache(input))
+    # TODO: handle deps being stale
+    if !isfile(output) || Base.stale_cachefile(input, output) === true
+        compilecache(input, output)
+        return false
+    end#if
+    true
+end#function
 
 end#module
