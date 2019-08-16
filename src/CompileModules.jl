@@ -45,6 +45,7 @@ function compilecache(input::AbstractString,
 end#function
 
 loadcache(cache::AbstractString=defaultcache(PROGRAM_FILE)) =
+    # TODO: test whether cache is stale
     Base._require_from_serialized(cache)
 
 ensure_compilecache(input::AbstractString,

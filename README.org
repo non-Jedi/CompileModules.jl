@@ -3,7 +3,7 @@
 This is a small proof-of-concept package that pulls some functions out
 of Base/loading.jl and lightly modifies them so that arbitrary modules
 (which aren't part of packages) can be precompiled and have their
-precompiled `.ji` files cached. This allows distributing scripts that
+precompiled ~.ji~ files cached. This allows distributing scripts that
 after first-use have their compile-time elided.
 
 To use it on a script, wrap the scripts functionality in a ~module~
@@ -21,3 +21,7 @@ with a single function entry (e.g. ~main~). Then, after the end of the
 #+end_src
 
 See ~examples/nbody.jl~ for a script that uses these features.
+
+Note that currently this package does not track whether a script has
+been modified to force recompilation of cache. If a script is
+modified, the ~.ji~ file should be manually deleted.
