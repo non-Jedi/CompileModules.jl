@@ -3,6 +3,15 @@
 #
 # Contributed by Adam Beckmeyer
 
+using CompileModules
+
+isinteractive() || ccall(:jl_generating_output, Cint, ()) == 1 || begin
+    cache = ensure_compilecache(@__FILE__)
+    mods = loadcache(cache)
+    first(mods).main(stdout, parse(Int, ARGS[1]))
+    exit()
+end#begin
+
 module NBodyAB
 
 import Printf: @printf
@@ -138,16 +147,15 @@ end#function
 function _precompile()
     ccall(:jl_generating_output, Cint, ()) == 1 || return
     precompile(main, (Base.TTY, Int, Float64))
+    precompile(next!, (Vector{Body}, Float64))
+    precompile(update_velocity, (Body, Body, Float64))
+    precompile(update_pos, (Body, Float64))
+    precompile(broadcast, (typeof(*), NTuple{4,Float64}, NTuple{4,Float64}))
+    precompile(broadcast, (typeof(*), NTuple{4,Float64}, Float64))
+    precompile(broadcast, (typeof(muladd), NTuple{4,Float64}, NTuple{4,Float64}))
 end#function
 
 _precompile()
 
 end#module
 
-using CompileModules
-
-isinteractive() || ccall(:jl_generating_output, Cint, ()) == 1 || begin
-    ensure_compilecache(@__FILE__)
-    loadcache(@__FILE__)
-    NBodyAB.main(stdout, parse(Int, ARGS[1]))
-end#begin

@@ -52,9 +52,8 @@ function ensure_compilecache(input::AbstractString,
     # TODO: handle deps being stale
     if !isfile(output) || Base.stale_cachefile(input, output) === true
         compilecache(input, output)
-        return false
     end#if
-    true
+    output
 end#function
 
 end#module

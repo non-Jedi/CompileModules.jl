@@ -7,16 +7,17 @@ precompiled ~.ji~ files cached. This allows distributing scripts that
 after first-use have their compile-time elided.
 
 To use it on a script, wrap the scripts functionality in a ~module~
-with a single function entry (e.g. ~main~). Then, after the end of the
+with a single function entry (e.g. ~main~). Then, just before the
 ~module~ put something like:
 
 #+begin_src julia
     using CompileModules
 
     isinteractive() || ccall(:jl_generating_output, Cint, ()) == 1 || begin
-        ensure_compilecache(@__FILE__)
-        loadcache(@__FILE__)
-        NBodyAB.main(stdout, parse(Int, ARGS[1]))
+        cache = ensure_compilecache(@__FILE__)
+        mods = loadcache(cache)
+        first(mods).main(stdout, parse(Int, ARGS[1]))
+        exit()
     end#begin
 #+end_src
 
