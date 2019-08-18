@@ -4,7 +4,11 @@ This is a small proof-of-concept package that pulls some functions out
 of Base/loading.jl and lightly modifies them so that arbitrary modules
 (which aren't part of packages) can be precompiled and have their
 precompiled ~.ji~ files cached. This allows distributing scripts that
-after first-use have their compile-time elided.
+after first-use have their compile-time elided. For scripts where
+compilation takes only a small portion of total runtime (such as the
+one shown in [[./examples/nbody.jl]]), the overhead of checking for
+existence of cached precompile and loading can be greater than the
+overhead of simply compiling each time the script is run.
 
 To use it on a script, wrap the scripts functionality in a ~module~
 with a single function entry (e.g. ~main~). Then, just before the
@@ -21,7 +25,7 @@ with a single function entry (e.g. ~main~). Then, just before the
     end#begin
 #+end_src
 
-See ~examples/nbody.jl~ for a script that uses these features.
+See [[./examples/nbody.jl]] for a script that uses these features.
 
 Note that currently this package does not check whether a module's
 dependencies have been updated. If dependencies have been updated, the

@@ -152,7 +152,7 @@ function _precompile()
     precompile(update_pos, (Body, Float64))
     precompile(broadcast, (typeof(*), NTuple{4,Float64}, NTuple{4,Float64}))
     precompile(broadcast, (typeof(*), NTuple{4,Float64}, Float64))
-    precompile(broadcast, (typeof(muladd), NTuple{4,Float64}, NTuple{4,Float64}))
+    precompile(broadcast, (typeof(muladd), Float64, NTuple{4,Float64}, NTuple{4,Float64}))
 end#function
 
 _precompile()

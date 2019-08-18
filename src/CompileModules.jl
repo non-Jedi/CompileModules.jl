@@ -4,15 +4,7 @@ export compilecache, loadcache, ensure_compilecache
 
 using Logging
 
-function defaultcache(input::AbstractString)
-    path = dirname(input)
-    ispath(path) || error("Invalid path")
-
-    name = join([split(basename(input), '.')[1:end-1]..., "ji"], '.')
-    name == "ji" && (name = basename(input) * ".ji")
-
-    joinpath(path, name)
-end#function
+defaultcache(input::AbstractString) = input * ".ji"
 
 # This is a lightly modified copy of compilecache from Base/loading.jl
 function compilecache(input::AbstractString,
